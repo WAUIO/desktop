@@ -16,14 +16,14 @@
  *                                          when "enableServerManagement is set to false
  */
 const buildConfig = {
-  defaultTeams: [/*
+  defaultTeams: [
     {
-      name: 'example',
-      url: 'https://example.com'
-    }*/
+      name: 'WAU Chat',
+      url: 'https://wau.chat',
+    },
   ],
   helpLink: 'https://about.mattermost.com/default-desktop-app-documentation/',
-  enableServerManagement: true,
+  enableServerManagement: false,
 };
 
 export default buildConfig;
