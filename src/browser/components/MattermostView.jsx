@@ -299,8 +299,8 @@ export default class MattermostView extends React.Component {
       <div className='mattermostView-loadingScreen'>
         <img
           className='mattermostView-loadingImage'
-          src='../assets/loading.gif'
-          srcSet='../assets/loading.gif 1x, ../assets/loading@2x.gif 2x'
+          src='../assets/loading.png'
+          srcSet='../assets/loading.png 1x, ../assets/loading@2x.png 2x'
         />
       </div>
     ) : null;

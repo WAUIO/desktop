@@ -22,7 +22,7 @@ const buildConfig = {
       url: 'https://wau.chat',
     },
   ],
-  helpLink: 'https://about.mattermost.com/default-desktop-app-documentation/',
+  helpLink: 'https://about.wau.chat/default-desktop-app-documentation/',
   enableServerManagement: false,
 };
 
