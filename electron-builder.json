@@ -1,5 +1,5 @@
 {
-  "appId": "com.mattermost.desktop",
+  "appId": "com.wauchat.desktop",
   "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
   "directories": {
     "buildResources": "resources",
@@ -15,12 +15,12 @@
   ],
   "protocols": [
     {
-      "name": "Mattermost",
+      "name": "WAU Chat",
       "schemes": ["mattermost"]
     }
   ],
   "deb": {
-    "synopsis": "Mattermost"
+    "synopsis": "WAU Chat"
   },
   "linux": {
     "category": "Network;InstantMessaging",

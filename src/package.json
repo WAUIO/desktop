@@ -1,12 +1,12 @@
 {
-  "name": "mattermost-desktop",
-  "productName": "Mattermost",
-  "desktopName": "Mattermost.desktop",
+  "name": "wau-chat-desktop",
+  "productName": "WAU Chat",
+  "desktopName": "WAUChat.desktop",
   "version": "4.2.0-develop",
-  "description": "Mattermost",
+  "description": "Wau Chat",
   "main": "main_bundle.js",
-  "author": "Mattermost, Inc. <feedback@mattermost.com>",
-  "homepage": "https://about.mattermost.com",
+  "author": "WAU IO, <feedback@wau.chat>",
+  "homepage": "https://about.wau.chat",
   "license": "Apache-2.0",
   "dependencies": {
     "auto-launch": "^5.0.5",
