@@ -20,9 +20,9 @@ function saveWindowState(file, window) {
 
 function createMainWindow(config, options) {
   const defaultWindowWidth = 1000;
-  const defaultWindowHeight = 700;
+  const defaultWindowHeight = 750;
   const minimumWindowWidth = 400;
-  const minimumWindowHeight = 240;
+  const minimumWindowHeight = 750;
 
   // Create the browser window.
   const boundsInfoPath = path.join(app.getPath('userData'), 'bounds-info.json');
