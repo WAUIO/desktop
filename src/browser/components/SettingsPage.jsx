@@ -564,7 +564,7 @@ export default class SettingsPage extends React.Component {
       >
         {'Use GPU hardware acceleration'}
         <HelpBlock>
-          {'If enabled, WAU Chat UI is rendered more efficiently but can lead to decreased stability for some systems.'}
+          {'If enabled, Silicon Chat UI is rendered more efficiently but can lead to decreased stability for some systems.'}
           {' Setting takes affect after restarting the app.'}
         </HelpBlock>
       </Checkbox>

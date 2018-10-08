@@ -18,7 +18,7 @@
 const buildConfig = {
   defaultTeams: [
     {
-      name: 'WAU Chat',
+      name: 'Silicon Chat',
       url: 'https://wau.chat',
     },
   ],

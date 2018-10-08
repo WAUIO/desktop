@@ -15,12 +15,12 @@
   ],
   "protocols": [
     {
-      "name": "WAU Chat",
+      "name": "Silicon Chat",
       "schemes": ["mattermost"]
     }
   ],
   "deb": {
-    "synopsis": "WAU Chat"
+    "synopsis": "Silicon Chat"
   },
   "linux": {
     "category": "Network;InstantMessaging",
