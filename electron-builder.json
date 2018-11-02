@@ -1,5 +1,5 @@
 {
-  "appId": "com.wauchat.desktop",
+  "appId": "com.siliconchat.desktop",
   "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
   "directories": {
     "buildResources": "resources",

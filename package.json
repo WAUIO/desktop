@@ -1,5 +1,5 @@
 {
-  "name": "wau-chat-desktop",
+  "name": "silicon-chat-desktop",
   "productName": "Silicon Chat",
   "version": "4.2.0-develop",
   "description": "Silicon Chat",
@@ -28,9 +28,9 @@
     "test": "npm-run-all test:* lint:*",
     "test:app": "cross-env NODE_ENV=production npm run build && mocha -r babel-register --reporter mocha-circleci-reporter --recursive test/specs",
     "package:all": "cross-env NODE_ENV=production npm-run-all check-build-config package:windows package:mac package:linux",
-    "package:windows": "cross-env NODE_ENV=production npm-run-all check-build-config build && build --win --x64 --ia32 --config.extraMetadata.name=wauchat --publish=never",
+    "package:windows": "cross-env NODE_ENV=production npm-run-all check-build-config build && build --win --x64 --ia32 --config.extraMetadata.name=silicon-chat --publish=never",
     "package:mac": "cross-env NODE_ENV=production npm-run-all check-build-config build && build --mac --publish=never",
-    "package:linux": "cross-env NODE_ENV=production npm-run-all check-build-config build && build --linux --x64 --ia32 --config.extraMetadata.name=wau-chat-desktop --publish=never",
+    "package:linux": "cross-env NODE_ENV=production npm-run-all check-build-config build && build --linux --x64 --ia32 --config.extraMetadata.name=silicon-chat-desktop --publish=never",
     "manipulate-windows-zip": "node scripts/manipulate_windows_zip.js",
     "lint:js": "eslint --ignore-path .gitignore --ignore-pattern node_modules --ext .js --ext .jsx .",
     "fix:js": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet --ext .js --ext .jsx . --fix",

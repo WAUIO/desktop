@@ -16,17 +16,17 @@ cat <<-MD
 The download links can be found below.
 
 #### Linux
-$(print_link "${BASE_URL}/wau-chat-desktop-${VERSION}-linux-ia32.tar.gz")
-$(print_link "${BASE_URL}/wau-chat-desktop-${VERSION}-linux-x64.tar.gz")
-$(print_link "${BASE_URL}/wau-chat-desktop-${VERSION}-linux-amd64.deb")
-$(print_link "${BASE_URL}/wau-chat-desktop-${VERSION}-linux-i386.deb")
+$(print_link "${BASE_URL}/${NAME}-desktop-${VERSION}-linux-ia32.tar.gz")
+$(print_link "${BASE_URL}/${NAME}-desktop-${VERSION}-linux-x64.tar.gz")
+$(print_link "${BASE_URL}/${NAME}-desktop-${VERSION}-linux-amd64.deb")
+$(print_link "${BASE_URL}/${NAME}-desktop-${VERSION}-linux-i386.deb")
 
 #### Mac
-$(print_link "${BASE_URL}/wau-chat-desktop-${VERSION}-osx.tar.gz")
+$(print_link "${BASE_URL}/${NAME}-desktop-${VERSION}-osx.tar.gz")
 
 #### Windows
-$(print_link "${BASE_URL}/wau-chat-desktop-${VERSION}-win32.zip")
-$(print_link "${BASE_URL}/wau-chat-desktop-${VERSION}-win64.zip")
-$(print_link "${BASE_URL}/wau-chat-setup-${VERSION}-win32.exe")
-$(print_link "${BASE_URL}/wau-chat-setup-${VERSION}-win64.exe")
+$(print_link "${BASE_URL}/${NAME}-desktop-${VERSION}-win32.zip")
+$(print_link "${BASE_URL}/${NAME}-desktop-${VERSION}-win64.zip")
+$(print_link "${BASE_URL}/${NAME}-setup-${VERSION}-win32.exe")
+$(print_link "${BASE_URL}/${NAME}-setup-${VERSION}-win64.exe")
 MD

@@ -1,12 +1,12 @@
 {
-  "name": "wau-chat-desktop",
+  "name": "silicon-chat-desktop",
   "productName": "Silicon Chat",
-  "desktopName": "WAUChat.desktop",
+  "desktopName": "SiliconChat.desktop",
   "version": "4.2.0-develop",
-  "description": "Wau Chat",
+  "description": "Silicon Chat",
   "main": "main_bundle.js",
-  "author": "WAU IO, <feedback@wau.chat>",
-  "homepage": "https://about.wau.chat",
+  "author": "WAU IO, <feedback@silicon.chat>",
+  "homepage": "https://about.silicon.chat",
   "license": "Apache-2.0",
   "dependencies": {
     "auto-launch": "^5.0.5",

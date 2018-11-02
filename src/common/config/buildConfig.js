@@ -19,10 +19,10 @@ const buildConfig = {
   defaultTeams: [
     {
       name: 'Silicon Chat',
-      url: 'https://wau.chat',
+      url: 'http://35.243.179.245:8065',
     },
   ],
-  helpLink: 'https://about.wau.chat/default-desktop-app-documentation/',
+  helpLink: 'https://about.silicon.chat/default-desktop-app-documentation/',
   enableServerManagement: false,
 };
 
