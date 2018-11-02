@@ -19,7 +19,7 @@ const buildConfig = {
   defaultTeams: [
     {
       name: 'Silicon Chat',
-      url: 'http://35.243.179.245:8065',
+      url: 'https://app.siliconchat.co',
     },
   ],
   helpLink: 'https://about.silicon.chat/default-desktop-app-documentation/',
