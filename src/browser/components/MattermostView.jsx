@@ -9,10 +9,10 @@ import url from 'url';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {findDOMNode} from 'react-dom';
 import {ipcRenderer, remote, shell} from 'electron';
 
 import contextMenu from '../js/contextMenu';
+import Utils from '../../utils/util';
 import {protocols} from '../../../electron-builder.json';
 const scheme = protocols[0].schemes[0];
 
@@ -23,25 +23,6 @@ const preloadJS = `file://${remote.app.getAppPath()}/browser/webview/mattermost_
 const ERR_NOT_IMPLEMENTED = -11;
 const U2F_EXTENSION_URL = 'chrome-extension://kmendfapggjehodndflmmgagdbamhnfd/u2f-comms.html';
 
-function extractFileURL(message) {
-  const matched = message.match(/Not allowed to load local resource:\s*(.+)/);
-  if (matched) {
-    return matched[1];
-  }
-  return '';
-}
-
-function isNetworkDrive(fileURL) {
-  const u = url.parse(fileURL);
-  if (u.protocol === 'file:' && u.host) {
-    // Disallow localhost, 127.0.0.1, ::1.
-    if (!u.host.match(/^localhost$|^127\.0\.0\.1$|^\[::1\]$/)) {
-      return true;
-    }
-  }
-  return false;
-}
-
 export default class MattermostView extends React.Component {
   constructor(props) {
     super(props);
@@ -51,6 +32,7 @@ export default class MattermostView extends React.Component {
       isContextMenuAdded: false,
       reloadTimeoutID: null,
       isLoaded: false,
+      basename: '/',
     };
 
     this.handleUnreadCountChange = this.handleUnreadCountChange.bind(this);
@@ -63,17 +45,19 @@ export default class MattermostView extends React.Component {
     this.goForward = this.goForward.bind(this);
     this.getSrc = this.getSrc.bind(this);
     this.handleDeepLink = this.handleDeepLink.bind(this);
+
+    this.webviewRef = React.createRef();
   }
 
-  handleUnreadCountChange(unreadCount, mentionCount, isUnread, isMentioned) {
-    if (this.props.onUnreadCountChange) {
-      this.props.onUnreadCountChange(unreadCount, mentionCount, isUnread, isMentioned);
+  handleUnreadCountChange(sessionExpired, unreadCount, mentionCount, isUnread, isMentioned) {
+    if (this.props.onBadgeChange) {
+      this.props.onBadgeChange(sessionExpired, unreadCount, mentionCount, isUnread, isMentioned);
     }
   }
 
   componentDidMount() {
     const self = this;
-    const webview = findDOMNode(this.refs.webview);
+    const webview = this.webviewRef.current;
 
     webview.addEventListener('did-fail-load', (e) => {
       console.log(self.props.name, 'webview did-fail-load', e);
@@ -112,7 +96,7 @@ export default class MattermostView extends React.Component {
         return;
       }
 
-      if (currentURL.host === destURL.host) {
+      if (Utils.isInternalURL(destURL, currentURL, this.state.basename)) {
         if (destURL.path.match(/^\/api\/v[3-4]\/public\/files\//)) {
           ipcRenderer.send('download-url', e.url);
         } else {
@@ -155,16 +139,16 @@ export default class MattermostView extends React.Component {
       case 'onGuestInitialized':
         self.setState({
           isLoaded: true,
+          basename: event.args[0] || '/',
         });
         break;
-      case 'onUnreadCountChange': {
-        const unreadCount = event.args[0];
-        const mentionCount = event.args[1];
-
-        // isUnread and isMentioned is pulse flag.
-        const isUnread = event.args[2];
-        const isMentioned = event.args[3];
-        self.handleUnreadCountChange(unreadCount, mentionCount, isUnread, isMentioned);
+      case 'onBadgeChange': {
+        const sessionExpired = event.args[0];
+        const unreadCount = event.args[1];
+        const mentionCount = event.args[2];
+        const isUnread = event.args[3];
+        const isMentioned = event.args[4];
+        self.handleUnreadCountChange(sessionExpired, unreadCount, mentionCount, isUnread, isMentioned);
 
         break;
       }
@@ -191,19 +175,9 @@ export default class MattermostView extends React.Component {
       case 1:
         console.warn(message);
         break;
-      case 2: {
-        const fileURL = extractFileURL(e.message);
-        if (isNetworkDrive(fileURL)) {
-          // Network drive: Should be allowed.
-          if (!shell.openExternal(decodeURI(fileURL))) {
-            console.log(`[${this.props.name}] shell.openExternal failed: ${fileURL}`);
-          }
-        } else {
-          // Local drive such as 'C:\Windows': Should not be allowed.
-          console.error(message);
-        }
+      case 2:
+        console.error(message);
         break;
-      }
       default:
         console.log(message);
         break;
@@ -218,7 +192,7 @@ export default class MattermostView extends React.Component {
       reloadTimeoutID: null,
       isLoaded: false,
     });
-    const webview = findDOMNode(this.refs.webview);
+    const webview = this.webviewRef.current;
     webview.reload();
   }
 
@@ -226,14 +200,14 @@ export default class MattermostView extends React.Component {
     this.setState({
       errorInfo: null,
     });
-    const webContents = findDOMNode(this.refs.webview).getWebContents();
+    const webContents = this.webviewRef.current.getWebContents();
     webContents.session.clearCache(() => {
       webContents.reload();
     });
   }
 
   focusOnWebView() {
-    const webview = findDOMNode(this.refs.webview);
+    const webview = this.webviewRef.current;
     const webContents = webview.getWebContents(); // webContents might not be created yet.
     if (webContents && !webContents.isFocused()) {
       webview.focus();
@@ -242,32 +216,32 @@ export default class MattermostView extends React.Component {
   }
 
   canGoBack() {
-    const webview = findDOMNode(this.refs.webview);
+    const webview = this.webviewRef.current;
     return webview.getWebContents().canGoBack();
   }
 
   canGoForward() {
-    const webview = findDOMNode(this.refs.webview);
+    const webview = this.webviewRef.current;
     return webview.getWebContents().canGoForward();
   }
 
   goBack() {
-    const webview = findDOMNode(this.refs.webview);
+    const webview = this.webviewRef.current;
     webview.getWebContents().goBack();
   }
 
   goForward() {
-    const webview = findDOMNode(this.refs.webview);
+    const webview = this.webviewRef.current;
     webview.getWebContents().goForward();
   }
 
   getSrc() {
-    const webview = findDOMNode(this.refs.webview);
+    const webview = this.webviewRef.current;
     return webview.src;
   }
 
   handleDeepLink(relativeUrl) {
-    const webview = findDOMNode(this.refs.webview);
+    const webview = this.webviewRef.current;
     webview.executeJavaScript(
       'history.pushState(null, null, "' + relativeUrl + '");'
     );
@@ -314,7 +288,7 @@ export default class MattermostView extends React.Component {
           id={this.props.id}
           preload={preloadJS}
           src={this.props.src}
-          ref='webview'
+          ref={this.webviewRef}
         />
         { loadingImage }
       </div>);
@@ -325,7 +299,7 @@ MattermostView.propTypes = {
   name: PropTypes.string,
   id: PropTypes.string,
   onTargetURLChange: PropTypes.func,
-  onUnreadCountChange: PropTypes.func,
+  onBadgeChange: PropTypes.func,
   src: PropTypes.string,
   active: PropTypes.bool,
   withTab: PropTypes.bool,

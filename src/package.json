@@ -1,9 +1,9 @@
 {
   "name": "wau-chat-desktop",
   "productName": "WAU Chat",
-  "desktopName": "WAUChat.desktop",
-  "version": "4.2.0-develop",
-  "description": "Wau Chat",
+  "desktopName": "WAU Chat.desktop",
+  "version": "4.2.1",
+  "description": "Mattermost",
   "main": "main_bundle.js",
   "author": "WAU IO, <feedback@wau.chat>",
   "homepage": "https://about.wau.chat",
